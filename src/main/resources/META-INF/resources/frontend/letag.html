@@ -1,0 +1,59 @@
+<link rel="import" href="bower_components/polymer/polymer.html">
+
+<dom-module id="le-tag">
+    <template>
+        <style>
+            #chatinput {
+                width: 100%;
+            }
+
+            #chatbox {
+                width: 100%;
+                height: 100%;
+            }
+
+            :host {
+                background-color: red;
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+            }
+        </style>
+        <input id="chatinput" on-change="onChatInput" placeholder="Input a text"/>
+        <br>
+        <textarea id="chatbox">chatbox</textarea>
+    </template>
+</dom-module>
+
+<script>
+    class LeTag extends Polymer.Element {
+
+        static get is() {
+            return 'le-tag'
+        }
+
+        ready() {
+            super.ready();
+        }
+
+        static get properties() {
+            return {
+                "prop": {type: String, notify: true},
+                "serverprop": {type: String, notify: true}
+            };
+        }
+
+        onChatInput(e) {
+            this.$server.chatInput(e.target.value);
+            this.$.chatinput.value = "";
+        }
+
+        chatOutput(line) {
+            this.$.chatbox.innerHTML = line + "\n" + this.$.chatbox.innerHTML;
+        }
+    }
+    customElements.define(LeTag.is, LeTag);
+
+</script>
