@@ -88,6 +88,7 @@ public class MainView extends Composite<Div> {
     @Override
     protected void onAttach(AttachEvent attachEvent) {
         super.onAttach(attachEvent);
+        //TODO: this does not work or is very hacky. How does one enable push in Vaadin Flow?
         attachEvent.getUI().getPushConfiguration().setPushMode(PushMode.AUTOMATIC);
         attachEvent.getUI().getPushConfiguration().setTransport(Transport.LONG_POLLING);
     }
