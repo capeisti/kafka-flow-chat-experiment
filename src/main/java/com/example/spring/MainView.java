@@ -21,7 +21,6 @@ import com.vaadin.shared.ui.Transport;
 import com.vaadin.ui.Composite;
 import com.vaadin.ui.common.StyleSheet;
 import com.vaadin.ui.event.AttachEvent;
-import com.vaadin.ui.event.DetachEvent;
 import com.vaadin.ui.html.Div;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -49,7 +48,7 @@ public class MainView extends Composite<Div> {
         consumerprops.put("auto.commit.interval.ms", "1000");
         consumerprops.put("key.deserializer", StringDeserializer.class.getName());
         consumerprops.put("value.deserializer", StringDeserializer.class.getName());
-        LeTag tag = new LeTag();
+        ChatTag tag = new ChatTag();
 
         new Thread(() -> {
             KafkaConsumer<String, String> consumer = new KafkaConsumer<>(consumerprops);
@@ -82,7 +81,7 @@ public class MainView extends Composite<Div> {
         p.put("value.serializer", org.apache.kafka.common.serialization.StringSerializer.class.getName());
 
         KafkaProducer<String, String> producer = new KafkaProducer<>(p);
-        producer.send(new ProducerRecord<String, String>("chat-input", "kek", line));
+        producer.send(new ProducerRecord<String, String>("chat-input", "line", line));
         producer.close();
     }
 
@@ -91,10 +90,5 @@ public class MainView extends Composite<Div> {
         super.onAttach(attachEvent);
         attachEvent.getUI().getPushConfiguration().setPushMode(PushMode.AUTOMATIC);
         attachEvent.getUI().getPushConfiguration().setTransport(Transport.LONG_POLLING);
-    }
-
-    @Override
-    protected void onDetach(DetachEvent detachEvent) {
-        super.onDetach(detachEvent);
     }
 }

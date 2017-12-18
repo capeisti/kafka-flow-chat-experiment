@@ -19,23 +19,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-
 /**
  * The entry point of the Spring Boot application.
  */
 @SpringBootApplication
-public class ExampleServletInitializer extends SpringBootServletInitializer {
+public class KafkaMain extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
-        //new Thread(new WordCountDemo()).start();
-        SpringApplication.run(ExampleServletInitializer.class, args);
-    }
-
-    @Override
-    public void onStartup(ServletContext servletContext) throws ServletException {
-        super.onStartup(servletContext);
-//        servletContext.addServlet("dispatcher", new Servlet(new AnnotationConfigWebApplicationContext()));
+        SpringApplication.run(KafkaMain.class, args);
     }
 }

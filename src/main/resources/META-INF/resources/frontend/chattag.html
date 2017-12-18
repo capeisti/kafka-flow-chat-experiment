@@ -1,6 +1,6 @@
 <link rel="import" href="bower_components/polymer/polymer.html">
 
-<dom-module id="le-tag">
+<dom-module id="chat-tag">
     <template>
         <style>
             #chatinput {
@@ -28,10 +28,10 @@
 </dom-module>
 
 <script>
-    class LeTag extends Polymer.Element {
+    class ChatTag extends Polymer.Element {
 
         static get is() {
-            return 'le-tag'
+            return 'chat-tag'
         }
 
         ready() {
@@ -54,6 +54,6 @@
             this.$.chatbox.innerHTML = line + "\n" + this.$.chatbox.innerHTML;
         }
     }
-    customElements.define(LeTag.is, LeTag);
+    customElements.define(ChatTag.is, ChatTag);
 
 </script>

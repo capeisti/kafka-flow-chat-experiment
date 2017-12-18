@@ -7,17 +7,14 @@ import com.vaadin.ui.common.HtmlImport;
 
 import java.io.Serializable;
 
-@Tag("le-tag")
-@HtmlImport("letag.html")
-public class LeTag extends Component {
-
+@Tag("chat-tag")
+@HtmlImport("chattag.html")
+public class ChatTag extends Component {
     @ClientDelegate
     public void chatInput(String line) {
         MainView.sendLine(line);
     }
-
     public void chatOutput(String line) {
         getElement().callFunction("chatOutput", new Serializable[]{line});
     }
-
 }
