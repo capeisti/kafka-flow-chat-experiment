@@ -15,6 +15,6 @@ public class ChatTag extends Component {
         MainView.sendLine(line);
     }
     public void chatOutput(String line) {
-        getElement().callFunction("chatOutput", new Serializable[]{line});
+        getElement().callFunction("chatOutput", line);
     }
 }

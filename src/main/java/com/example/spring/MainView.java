@@ -19,7 +19,6 @@ import com.vaadin.router.Route;
 import com.vaadin.shared.communication.PushMode;
 import com.vaadin.shared.ui.Transport;
 import com.vaadin.ui.Composite;
-import com.vaadin.ui.common.StyleSheet;
 import com.vaadin.ui.event.AttachEvent;
 import com.vaadin.ui.html.Div;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -29,7 +28,7 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Properties;
 
 /**
@@ -51,7 +50,7 @@ public class MainView extends Composite<Div> {
 
         new Thread(() -> {
             KafkaConsumer<String, String> consumer = new KafkaConsumer<>(consumerprops);
-            consumer.subscribe(Arrays.asList("chat-input"));
+            consumer.subscribe(Collections.singletonList("chat-input"));
             while (true) {
                 ConsumerRecords<String, String> records = consumer.poll(1000);
                 if (!records.isEmpty()) {
@@ -80,7 +79,7 @@ public class MainView extends Composite<Div> {
         p.put("value.serializer", org.apache.kafka.common.serialization.StringSerializer.class.getName());
 
         KafkaProducer<String, String> producer = new KafkaProducer<>(p);
-        producer.send(new ProducerRecord<String, String>("chat-input", "line", line));
+        producer.send(new ProducerRecord<>("chat-input", "line", line));
         producer.close();
     }
 
