@@ -10,11 +10,19 @@ import java.io.Serializable;
 @Tag("chat-tag")
 @HtmlImport("chattag.html")
 public class ChatTag extends Component {
+    public ChatTag() {
+        getElement().setProperty("nickname", "Loldier");
+    }
+
+    public String getNickname() {
+        return getElement().getProperty("nickname");
+    }
+
     @ClientDelegate
     public void chatInput(String line) {
-        MainView.sendLine(line);
+        MainView.sendLine(line, getNickname());
     }
-    public void chatOutput(String line) {
-        getElement().callFunction("chatOutput", line);
+    public void chatOutput(String line, String nickname) {
+        getElement().callFunction("chatOutput", line, nickname);
     }
 }

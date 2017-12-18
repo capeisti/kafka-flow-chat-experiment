@@ -1,4 +1,4 @@
-Super simple chat application demo for Apache Kafka and Vaadin Flow.
+Super simple chat application demo for Apache Kafka and Vaadin Flow
 ==
 Requires Apache Kafka installed and running at default ports.
 
@@ -6,13 +6,13 @@ Requires Apache Kafka installed and running at default ports.
 - Scripts assumes that env variable KAFKA_HOME points to directory where Kafka is installed to.
 
 **Installation**
-- Create Kafka topics chat-input (see scripts/createtopic.sh)
+- Create Kafka topic chat-input (see scripts/createtopic.sh)
 
 **Running**
 - Run web application as spring boot application.
-- Provided scripts/runserver.sh and scripts/zookeeper.sh scripts may be useful.
+- Provided scripts/runserver.sh and scripts/zookeeper.sh scripts may be useful for running Kafka
 
-**Licensing and enterprise use**
+**Licensing and enterprise pricing**
 
             DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE 
    TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION 

@@ -56,7 +56,7 @@ public class MainView extends Composite<Div> {
                 if (!records.isEmpty()) {
                     getUI().ifPresent(ui -> ui.access(() -> {
                         for (ConsumerRecord<String, String> record : records) {
-                            tag.chatOutput(record.value());
+                            tag.chatOutput(record.value(), record.key());
                         }
                     }));
 
@@ -67,7 +67,7 @@ public class MainView extends Composite<Div> {
         getContent().add(tag);
     }
 
-    public static void sendLine(String line) {
+    public static void sendLine(String line, String nick) {
         Properties p = new Properties();
         p.put("bootstrap.servers", "localhost:9092");
         p.put("acks", "all");
@@ -79,7 +79,7 @@ public class MainView extends Composite<Div> {
         p.put("value.serializer", org.apache.kafka.common.serialization.StringSerializer.class.getName());
 
         KafkaProducer<String, String> producer = new KafkaProducer<>(p);
-        producer.send(new ProducerRecord<>("chat-input", "line", line));
+        producer.send(new ProducerRecord<>("chat-input", nick, line));
         producer.close();
     }
 

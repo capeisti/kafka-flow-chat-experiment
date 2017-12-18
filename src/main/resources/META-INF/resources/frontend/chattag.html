@@ -7,22 +7,33 @@
                 width: 100%;
             }
 
+            #nick {
+                width: 200px;
+            }
+
             #chatbox {
                 width: 100%;
                 height: 100%;
             }
 
+            #chatcontrols {
+                display: flex;
+            }
+
             :host {
-                background-color: red;
                 position: absolute;
                 top: 0;
                 bottom: 0;
                 left: 0;
                 right: 0;
+                display: flex;
+                flex-direction: column;
             }
         </style>
-        <input id="chatinput" on-change="onChatInput" placeholder="Input a text"/>
-        <br>
+        <div id="chatcontrols">
+            <input id="nick" on-change="onNickChange" value={{nickname}} placeholder="Set your nickname"/>
+            <input id="chatinput" on-change="onChatInput" placeholder="Input a text"/>
+        </div>
         <textarea id="chatbox">chatbox</textarea>
     </template>
 </dom-module>
@@ -40,8 +51,7 @@
 
         static get properties() {
             return {
-                "prop": {type: String, notify: true},
-                "serverprop": {type: String, notify: true}
+                "nickname": {type: String, notify: true}
             };
         }
 
@@ -50,8 +60,12 @@
             this.$.chatinput.value = "";
         }
 
-        chatOutput(line) {
-            this.$.chatbox.innerHTML = line + "\n" + this.$.chatbox.innerHTML;
+        onNickChange(e) {
+            this.nickname = e.target.value;
+        }
+
+        chatOutput(line, nickname) {
+            this.$.chatbox.innerHTML = "<"+nickname+"> "+line + "\n" + this.$.chatbox.innerHTML;
         }
     }
     customElements.define(ChatTag.is, ChatTag);
