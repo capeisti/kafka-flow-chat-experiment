@@ -15,12 +15,13 @@
  */
 package com.example.spring;
 
-import com.vaadin.router.Route;
-import com.vaadin.shared.communication.PushMode;
-import com.vaadin.shared.ui.Transport;
-import com.vaadin.ui.Composite;
-import com.vaadin.ui.event.AttachEvent;
-import com.vaadin.ui.html.Div;
+import com.vaadin.flow.component.AttachEvent;
+import com.vaadin.flow.component.Composite;
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.router.Route;
+import com.vaadin.flow.shared.communication.PushMode;
+import com.vaadin.flow.shared.ui.Transport;
+import com.vaadin.flow.spring.annotation.UIScope;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -35,18 +36,21 @@ import java.util.Properties;
  * The main view contains a simple label element and a template element.
  */
 @Route("")
+@UIScope
 public class MainView extends Composite<Div> {
     private static int index = 0;
+    private final Properties consumerprops;
+    private final ChatTag tag;
 
     public MainView() {
-        Properties consumerprops = new Properties();
+        consumerprops = new Properties();
         consumerprops.put("bootstrap.servers", "localhost:9092");
         consumerprops.put("group.id", Integer.toString(index++));
         consumerprops.put("enable.auto.commit", "true");
         consumerprops.put("auto.commit.interval.ms", "1000");
         consumerprops.put("key.deserializer", StringDeserializer.class.getName());
         consumerprops.put("value.deserializer", StringDeserializer.class.getName());
-        ChatTag tag = new ChatTag();
+        tag = new ChatTag();
 
         new Thread(() -> {
             KafkaConsumer<String, String> consumer = new KafkaConsumer<>(consumerprops);
@@ -89,5 +93,15 @@ public class MainView extends Composite<Div> {
         //TODO: this does not work or is very hacky. How does one enable push in Vaadin Flow?
         attachEvent.getUI().getPushConfiguration().setPushMode(PushMode.AUTOMATIC);
         attachEvent.getUI().getPushConfiguration().setTransport(Transport.LONG_POLLING);
+        KafkaConsumer<String, String> consumer = new KafkaConsumer<>(consumerprops);
+        consumer.subscribe(Collections.singletonList("chat-input"));
+        consumer.seekToBeginning(Collections.emptyList());
+        ConsumerRecords<String, String> records = consumer.poll(5000);
+        if (!records.isEmpty()) {
+            for (ConsumerRecord<String, String> record : records) {
+                tag.chatOutput(record.value(), record.key());
+            }
+        }
+        consumer.unsubscribe();
     }
 }

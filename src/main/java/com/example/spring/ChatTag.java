@@ -1,11 +1,9 @@
 package com.example.spring;
 
-import com.vaadin.ui.Component;
-import com.vaadin.ui.Tag;
-import com.vaadin.ui.common.ClientDelegate;
-import com.vaadin.ui.common.HtmlImport;
-
-import java.io.Serializable;
+import com.vaadin.flow.component.ClientCallable;
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.Tag;
+import com.vaadin.flow.component.dependency.HtmlImport;
 
 @Tag("chat-tag")
 @HtmlImport("chattag.html")
@@ -18,10 +16,11 @@ public class ChatTag extends Component {
         return getElement().getProperty("nickname");
     }
 
-    @ClientDelegate
+    @ClientCallable
     public void chatInput(String line) {
         MainView.sendLine(line, getNickname());
     }
+
     public void chatOutput(String line, String nickname) {
         getElement().callFunction("chatOutput", line, nickname);
     }
