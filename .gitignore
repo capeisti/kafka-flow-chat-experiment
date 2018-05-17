@@ -1,5 +1,5 @@
-src/main/resources/META-INF/resources/frontend/node/
-src/main/resources/META-INF/resources/frontend/node_modules/
+src/main/webapp/frontend/node/
+src/main/webapp/frontend/node_modules/
 **/.DS_Store
 target
 .idea/
